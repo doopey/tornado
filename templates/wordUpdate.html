@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>添加词条</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="{{static_url("css/normalize.css")}}" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+    <script src="http://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="http://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    <script src="{{static_url("js/bootbox.min.js")}}"></script>
+    <script src = "http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js" ></script>
+    <!-- <script src="{{static_url("bootbox.min.js")}}"></script> -->
+    <style>
+        body {margin: 0 20px;}
+    </style>
+</head>
+<body>
+<div class="page-header">
+    <h2>添加词条</h2>
+    <div class="form-inline" role="form" style="margin-bottom:10px;">
+        <span>使用</span>
+        <input type="text" class="form-control" id="key">
+        <button id="btn_submit" type="submit" class="btn btn-primary">搜索</button>
+    </div>
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">数据库</div>
+                <div class="panel-body" id="db_result">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-warning">
+                <div class="panel-heading">互动百科</div>
+                <div class="panel-body" id="biz_result">
+{#                        <label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio1' value='111' checked>1</label>#}
+{#                        <label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio2' value='222'>2</label>#}
+{#                        <label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='333'>3</label>#}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5><a href="/" target='_blank'>返回导航页</a></h5>
+
+<div id="container"></div>
+<script>
+    var data;
+    $(function () {
+        renderDBResult()
+    });
+
+    function renderDBResult() {
+        var res = '{"row_num": 3, "data": [{"introduction": "LBJ即勒布朗·詹姆斯（1984年12月30日——），男，美国职业篮球运动员，司职小前锋，现效力于克利夫兰骑士队。勒布朗·詹姆斯在2003年的NBA选秀大会中，首轮第一顺位被克利夫兰骑士队选中。2003-2010年，詹姆斯在骑士队效力7年，期间获得两届NBA最有价值球员（MVP）。2010年转会至迈阿密热火队，与德怀恩·韦德、克里斯·波什组成“三巨头”阵容。2012年，勒布朗·詹姆斯收获了个人在NBA的第三座最有价值球员奖，亦于同年获得了NBA生涯第一个总冠军并加冕总决赛MVP。当年夏天，勒布朗·詹姆斯代表美国男篮获得了伦敦奥运会金牌，追平了迈克尔·乔丹在1992年所创的纪录。2013年，他再度获得NBA总冠军、完成两连冠，并连续两年包揽常规赛和总决赛MVP。2014-15赛季，勒布朗·詹姆斯回归克利夫兰骑士队。", "add_word": "", "id": 151864, "full_name": "LBJ", "split_word": "勒布朗•詹姆斯||勒布朗-詹姆斯||勒布朗.詹姆斯||勒布朗詹姆斯||勒布朗·詹姆斯"}, ' +
+            '{"introduction": "勒布朗·詹姆斯（LeBron James），1984年12月30日出生在美国俄亥俄州阿克伦，美国男子职业篮球运动员，司职小前锋，现效力于克利夫兰骑士队。勒布朗·詹姆斯在2003年的NBA选秀大会中，首轮第一顺位被克利夫兰骑士队选中。2003-2010年，詹姆斯在骑士队效力7年，期间获得两届NBA最有价值球员（MVP）。2010年转会至迈阿密热火队。2012年，詹姆斯收获了个人在NBA的第三座最有价值球员奖，亦于同年获得了NBA生涯第一个总冠军并加冕总决赛MVP。当年夏天，詹姆斯代表美国男篮获得了伦敦奥运会金牌，追平了迈克尔·乔丹1992年的纪录。2013年，他再度获得NBA总冠军、完成两连冠，并连续两年包揽常规赛和总决赛MVP。2014-15赛季，詹姆斯回归克利夫兰骑士队。2015-2016赛季，詹姆斯带领骑士队以4：3战胜勇士队获得队史首个冠军，并全票当选总决赛MVP。2016年7月14日，在ESPY颁奖礼上，勒布朗-詹姆斯被评为年度最佳NBA球员。", "add_word": "", "id": 2095352, "full_name": "勒布朗·詹姆斯", "split_word": "勒布朗•詹姆斯||勒布朗·詹姆斯||勒布朗詹姆斯||勒布朗-瑞蒙-詹姆斯||勒布朗.詹姆斯||勒布朗瑞蒙詹姆斯||勒布朗·瑞蒙·詹姆斯||勒布朗-詹姆斯||勒布朗•瑞蒙•詹姆斯||勒布朗.瑞蒙.詹姆斯"},' +
+            '{"introduction": "勒布朗·詹姆斯（LeBron James），1984年12月30日出生在美国俄亥俄州阿克伦，美国男子职业篮球运动员，司职小前锋，现效力于克利夫兰骑士队。勒布朗·詹姆斯在2003年的NBA选秀大会中，首轮第一顺位被克利夫兰骑士队选中。2003-2010年，詹姆斯在骑士队效力7年，期间获得两届NBA最有价值球员（MVP）。2010年转会至迈阿密热火队。2012年，詹姆斯收获了个人在NBA的第三座最有价值球员奖，亦于同年获得了NBA生涯第一个总冠军并加冕总决赛MVP。当年夏天，詹姆斯代表美国男篮获得了伦敦奥运会金牌，追平了迈克尔·乔丹1992年的纪录。2013年，他再度获得NBA总冠军、完成两连冠，并连续两年包揽常规赛和总决赛MVP。2014-15赛季，詹姆斯回归克利夫兰骑士队。2015-2016赛季，詹姆斯带领骑士队以4：3战胜勇士队获得队史首个冠军，并全票当选总决赛MVP。2016年7月14日，在ESPY颁奖礼上，勒布朗-詹姆斯被评为年度最佳NBA球员。", "add_word": "", "id": 333352, "full_name": "勒布朗·詹姆斯", "split_word": "勒布朗•詹姆斯||勒布朗·詹姆斯||勒布朗詹姆斯||勒布朗-瑞蒙-詹姆斯||勒布朗.詹姆斯"}]}'
+        res = JSON.parse(res)
+        var row_num = res.row_num
+        if (row_num <= 0) {
+            alert("row_num <= 0")
+        } else if (row_num > 5) {
+            alert("row_num > 5")
+        } else {
+            data = res.data
+
+            var html = "<div id='db_content'><ul><li>" + data[0].id + "</li><li>" + data[0].full_name + "</li><li>" + data[0].split_word + "</li><li>" + data[0].add_word + "</li><li>" + data[0].introduction + "</li></ul></div>"
+            for (var i = 0; i < row_num; i ++) {
+                html += "<label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio" + (i+1) + "' value='" + data[i].id + "'"
+                if (i == 0) {
+                    html += " checked"
+                }
+                html += ">" + (i+1) + "</label>"
+            }
+            html += "<button class='btn btn-success'>插入别名</button><span>12314</span>"
+
+            $("#db_result").html(html)
+        }
+    }
+
+{#    $("body").on("click", ":radio", function (e) {#}
+{#        e.preventDefault();#}
+{#        if ($(this).is(":checked")) {#}
+{#            var i = $(this).attr("id").replace("inlineRadio", "") - 1#}
+{#            var html = "<ul><li>" + data[i].id + "</li><li>" + data[i].full_name + "</li><li>" + data[i].split_word + "</li><li>" + data[i].add_word + "</li><li>" + data[i].introduction + "</li></ul>"#}
+{#            $("#db_content").html(html)#}
+{#        }#}
+{#    });#}
+        $(":radio").click(function() {
+{#            if ($(this).is(":checked")) {#}
+{#                var i = $(this).attr("id").replace("inlineRadio", "") - 1#}
+{#                var html = "<ul><li>" + data[i].id + "</li><li>" + data[i].full_name + "</li><li>" + data[i].split_word + "</li><li>" + data[i].add_word + "</li><li>" + data[i].introduction + "</li></ul>"#}
+{#                $("#db_content").html(html)#}
+{#            }#}
+        });
+
+</script>
+</body>
+</html>
+
+

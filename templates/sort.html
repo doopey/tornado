@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head><title>推荐结果比对</title></head>
+    <body>
+        <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <h3>user imei: {{ user }}</h3>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>用户点击记录</h3>
+                <ol>
+                    {% for click in clicks %}
+                        <li><a href="{{ click[1] }}" target="_blank">{{ click[0] }}</a></li>
+                    {% end %}
+                </ol>
+            </div>
+
+            <div class="col-md-6">
+                <h3>推荐</h3>
+                <ol>
+                    {% for rec in recs %}
+                        <li><a href="{{ rec[1] }}" target="_blank">{{ rec[0] }}</a></li>
+                    {% end %}
+                </ol>
+            </div>
+        </div>
+
+    </body>
+</html>
