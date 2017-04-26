@@ -29,6 +29,31 @@
             <div class="panel panel-info">
                 <div class="panel-heading">数据库</div>
                 <div class="panel-body" id="db_result">
+                    <table class="table">
+                        <tbody>
+                            <tr><td><button class="btn btn-success btn-sm">添加</button></td><td>
+                                <table class="table">
+                                    <tbody>
+                                    <tr><td>123141</td><td>勒布朗•詹姆斯</td></tr>
+                                    <tr><th>split_word</th><td>勒布朗•詹姆斯||勒布朗-詹姆斯||勒布朗.詹姆斯||勒布朗詹姆斯||勒布朗·詹姆斯</td></tr>
+                                    <tr><th>add_word</th><td>勒布朗•詹姆斯||勒布朗-詹姆斯||勒布朗.詹姆斯||勒布朗詹姆斯||勒布朗·詹姆斯</td></tr>
+                                    <tr><th>introduction</th><td>勒布朗·詹姆斯（LeBron James），1984年12月30日出生在美国俄亥俄州阿克伦，美国男子职业篮球运动员，司职小前锋，现效力于克利夫</td></tr>
+                                    </tbody>
+                                </table>
+                            </td></tr>
+                            <tr><td><button class="btn btn-success btn-sm">添加</button></td><td>
+                                <table class="table">
+                                    <tbody>
+                                    <tr><th>id</th><td>431213</td></tr>
+                                    <tr><th>split_word</th><td>勒布朗•詹姆斯||勒布朗-詹姆斯||勒布朗.詹姆斯||勒布朗詹姆斯||勒布朗·詹姆斯</td></tr>
+                                    <tr><th>introduction</th><td>勒布朗·詹姆斯（LeBron James），1984年12月30日出生在美国俄亥俄州阿克伦，美国男子职业篮球运动员，司职小前锋，现效力于克利夫</td></tr>
+                                    </tbody>
+                                </table>
+                            </td></tr>
+                        </tbody>
+                    </table>
+
+
                 </div>
             </div>
         </div>
@@ -36,9 +61,7 @@
             <div class="panel panel-warning">
                 <div class="panel-heading">互动百科</div>
                 <div class="panel-body" id="biz_result">
-{#                        <label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio1' value='111' checked>1</label>#}
-{#                        <label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio2' value='222'>2</label>#}
-{#                        <label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='333'>3</label>#}
+
                 </div>
             </div>
         </div>
@@ -49,9 +72,25 @@
 
 <div id="container"></div>
 <script>
+    var addWord = '詹皇'
     var data;
     $(function () {
         renderDBResult()
+        $(".db_result").click(function() {
+            var id = $(this).attr('id')
+            bootbox.confirm("确定将'" + addWord + "'添加到id=" + id + "的记录?", function(result){
+                if (!result) {
+                    return
+                }
+                $.post(
+                    '/update_word',
+                    {'id': id},
+                    function(res) {
+                        alter("success")
+                    });
+            });
+
+        });
     });
 
     function renderDBResult() {
@@ -67,35 +106,24 @@
         } else {
             data = res.data
 
-            var html = "<div id='db_content'><ul><li>" + data[0].id + "</li><li>" + data[0].full_name + "</li><li>" + data[0].split_word + "</li><li>" + data[0].add_word + "</li><li>" + data[0].introduction + "</li></ul></div>"
-            for (var i = 0; i < row_num; i ++) {
-                html += "<label class='radio-inline'><input type='radio' name='inlineRadioOptions' id='inlineRadio" + (i+1) + "' value='" + data[i].id + "'"
-                if (i == 0) {
-                    html += " checked"
-                }
-                html += ">" + (i+1) + "</label>"
+            var html = '<table class="table"><tbody>'
+            for (var i=0; i<row_num; i++) {
+                html += '<tr><td><button class="btn btn-success btn-sm db_result" id="' + data[i].id + '">添加</button></td><td><table class="table"><tbody>' +
+                '<tr><td>' + data[i].id + '</td><td>' + data[i].full_name + '</td></tr>' +
+                '<tr><th>split_word</th><td>' + data[i].split_word + '</td></tr><tr><th>add_word</th><td>' + data[i].add_word + '</td></tr>' +
+                '<tr><th>introduction</th><td>' + data[i].introduction + '</td></tr></tbody></table></td></tr>'
             }
-            html += "<button class='btn btn-success'>插入别名</button><span>12314</span>"
+            html += '</tbody></table>'
 
             $("#db_result").html(html)
         }
     }
 
-{#    $("body").on("click", ":radio", function (e) {#}
-{#        e.preventDefault();#}
-{#        if ($(this).is(":checked")) {#}
-{#            var i = $(this).attr("id").replace("inlineRadio", "") - 1#}
-{#            var html = "<ul><li>" + data[i].id + "</li><li>" + data[i].full_name + "</li><li>" + data[i].split_word + "</li><li>" + data[i].add_word + "</li><li>" + data[i].introduction + "</li></ul>"#}
-{#            $("#db_content").html(html)#}
-{#        }#}
-{#    });#}
-        $(":radio").click(function() {
-{#            if ($(this).is(":checked")) {#}
-{#                var i = $(this).attr("id").replace("inlineRadio", "") - 1#}
-{#                var html = "<ul><li>" + data[i].id + "</li><li>" + data[i].full_name + "</li><li>" + data[i].split_word + "</li><li>" + data[i].add_word + "</li><li>" + data[i].introduction + "</li></ul>"#}
-{#                $("#db_content").html(html)#}
-{#            }#}
-        });
+    <!--$("body").on("click", ".db_result", function (e) {-->
+        <!--e.preventDefault();-->
+        <!--alert($(this).attr('id'))-->
+    <!--});-->
+
 
 </script>
 </body>
